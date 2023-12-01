@@ -8,8 +8,7 @@ import numpy as np
 import os
 from keras.models import load_model
 
-# 전체 데이터셋 폴더에 저장된 음식이름(음식폴더명)을 리스트에 저장
-#creating a list of all the foods, in the argument i put the path to the folder that has all folders for food
+# 전체 데이터셋 폴더에 저장된 음식이름(음식폴더명)을 리스트에 저장 => 현재, ramen, pho, bibimbap, sushi, sashimi 5개 폴더 존재
 def create_foodlist(path):
     list_ = list()
     for root, dirs, files in os.walk(path, topdown=False):
@@ -21,8 +20,7 @@ def create_foodlist(path):
 my_model = load_model('model_trained.h5', compile = False)
 food_list = create_foodlist("archive/images")
 
-# 내 컴퓨터에 저장된 새로운 이미지를 불러오고 어떤 이미지인지 예측하는 함수
-#function to help in predicting classes of new images loaded from my computer(for now) 
+# 내 컴퓨터에 저장된 새로운 이미지를 불러오고 어떤 이미지인지 예측하는 함수 
 def predict_class(model, images, show = True):
   for img in images:
     img = utils.load_img(img, grayscale=False, color_mode='rgb', target_size=(299, 299))
@@ -41,11 +39,14 @@ def predict_class(model, images, show = True):
         plt.title(pred_value)
         plt.show()
 
-# 예측할 이미지를 현재 파일과 같은 선상에 저장 후, images.append('예측할 이미지 파일명.확장자')
-#add the images you want to predict into a list (these are in the WD)
+# 예측할 이미지를 root파일 바로 밑에 저장 후, images.append('예측할 이미지 파일명.확장자')
 images = []
 images.append('aa.jpg')
-images.append('es.jpg')
+images.append('bb.jpg')
+images.append('cc.jpg')
+images.append('dd.jpg')
+images.append('ee.jpg')
+
 
 
 print("PREDICTIONS BASED ON PICTURES UPLOADED")

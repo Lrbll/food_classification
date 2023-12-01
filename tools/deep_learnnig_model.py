@@ -33,9 +33,9 @@ n_classes = 4
 img_width, img_height = 299, 299
 train_data_dir = 'C:/food_classification/archive/train'
 validation_data_dir = 'C:/food_classification/archive/test'
-nb_train_samples = 1000
-nb_validation_samples = 1000
-batch_size = 20
+nb_train_samples = 3750 # 학습시킬 총 이미지 개수
+nb_validation_samples = 1250 # 검증으로 사용할 총 이미지 개수
+batch_size = 20 # 샘플 단위마다 가중치 업데이트 (현재 3750개의 이미지를 20개씩 학습시키고 3750개를 모두 채우면 1Epoch가 충족된다)
 
 train_datagen = ImageDataGenerator(
     rescale=1. / 255,
@@ -64,7 +64,8 @@ x = GlobalAveragePooling2D()(x)
 x = Dense(128,activation='relu')(x)
 x = Dropout(0.2)(x)
 
-predictions = Dense(4,kernel_regularizer=regularizers.l2(0.005), activation='softmax')(x)
+# Dense()의 맨 첫번째 인자 학습할 음식 종류 개수로 설정
+predictions = Dense(5,kernel_regularizer=regularizers.l2(0.005), activation='softmax')(x)
 
 model = Model(inputs=mbv2.input, outputs=predictions)
 model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy'])
